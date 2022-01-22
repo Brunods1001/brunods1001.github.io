@@ -1,1 +1,1 @@
-{{ plutonotebookpage ../notebooks/aoc2021day1.jl }}
+{{ plutonotebookpage /notebooks/aoc2021day1.jl }}
