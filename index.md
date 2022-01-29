@@ -1,4 +1,4 @@
-@def title = "Home"
+@def title = "Brunods Code Base"
 @def tags = ["syntax", "code"]
 
 # Table of contents
