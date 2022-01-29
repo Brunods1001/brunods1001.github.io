@@ -25,7 +25,7 @@ function hfun_plutonotebookpage(params)
     elseif endswith(path, ".html")
         path[1:end-5] * "/index.html"
     else
-        path * "/index.html"*
+        path * "/index.html"
     end
     println(path_to_html)
 
