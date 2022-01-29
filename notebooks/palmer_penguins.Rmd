@@ -1,0 +1,154 @@
+---
+title: "palmer_penguins"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(tidymodels)
+library(palmerpenguins)
+
+library(rbenchmark)
+library(profvis)
+
+palmerpenguins::penguins
+
+```
+```{r}
+# species has imbalances
+penguins %>% 
+  count(species)
+```
+```{r}
+# missing values in sex column
+penguins %>% summary()
+```
+```{r}
+# row-wise missing values
+tidy_count_missing_vals_in_each_row <- function(X) {
+   X %>% 
+    mutate(row_num = row_number()) %>% 
+    gather(key = "colname", value = "value", -row_num) %>%
+    filter(value |> is.na()) %>% 
+    count(row_num, sort = TRUE)
+}
+tidy_count_missing_vals_in_each_row(penguins)
+```
+
+I want to compare the tidyverse method to base R. You can get missing values by
+by columns by first broadcasting `is.na` to all values of a matrix, then apply
+the `sum` function to the columns of that matrix. This avoids using gather
+to perform expensive groupby operations.
+
+```{r}
+get_na_vec_by_row <- function(X) {
+  apply(is.na(X), 1, sum)
+}
+get_na_vec_by_row(penguins)
+```
+
+The "row_number" is implied by the index, so this solution is enough to identify
+missing values. If you want to get the sorted indices to find out which rows
+have the most missing values, use `order`.
+
+```{r}
+order(get_na_vec_by_row(penguins), decreasing = TRUE)[1:5]
+```
+
+
+Maybe you want to return the ordered na count vector while keeping the index
+info. You could return it as a named vector:
+```{r}
+get_ordered_named_na_vec_by_row <- function(X) {
+  na_vec <- get_na_vec_by_row(X)
+  idx <- order(na_vec, decreasing = TRUE)
+  setNames(na_vec[idx], idx)
+}
+get_ordered_named_na_vec_by_row(penguins)[1:5]
+```
+
+And if you want that as a tibble or dataframe, just create it from the named
+vector. The "row_number" will be the rownames, which is fine.
+```{r}
+get_ordered_na_df_by_row <- function(X) {
+  data.frame("n_missing" = get_ordered_named_na_vec_by_row(X)) 
+}
+get_ordered_na_df_by_row(penguins) %>% head()
+```
+To create a tibble from a named vector requires using the `enframe` function
+using extra parameters, so 
+
+```{r}
+get_ordered_na_tbl_by_row <- function(X) {
+  get_ordered_named_na_vec_by_row(X) |>
+    enframe(name = "row_number", value = "n_missing")
+}
+get_ordered_na_tbl_by_row(penguins) %>% head()
+```
+
+This function is equivalent to the original and is faster and more direct. In
+total, the logic is:
+
+```{r}
+# Goal: find number of missing values in each row
+# get number of missing values from each row
+na_vec <- apply(is.na(penguins), 1, sum)
+
+# get order of columns from most missing values to least
+idx <- order(na_vec, decreasing = TRUE)
+
+# create a named vector from the sorted number of missing values and their index
+setNames(na_vec[idx], idx) |>  # transform the result into a tbl
+  enframe(name = "row_number", value = "n_missing")
+```
+
+Compared to the following, which annoyed me because `pivot_longer` is now
+recommended over `gather`, so I tried using it and kept getting errors because
+the values had different types. So I had to find out about the 
+"values_transform" parameter to coerce all my values (except NA) to chars.
+
+```{r}
+# Goal: find number of missing values in each row
+penguins %>% 
+  # keep track of row
+  mutate(row_number = row_number()) %>% 
+  # melt all columns except row_number
+  pivot_longer(
+    !row_number, 
+    names_to = "column", 
+    values_to = "value",
+    values_transform = list(value = as.character)
+    ) %>% 
+  # filter non-missing values
+  filter(value |> is.na()) %>% 
+  # count and sort row_numbers
+  count(row_number, sort = TRUE)
+```
+
+```{r}
+benchmark(
+  mine = {
+    na_vec <- apply(is.na(penguins), 1, sum)
+    idx <- order(na_vec, decreasing = TRUE)
+    setNames(na_vec[idx], idx) |>
+      enframe(name = "row_number", value = "n_missing")
+  },
+  tidy = {
+    penguins %>% 
+      mutate(row_number = row_number()) %>%
+      pivot_longer(
+        !row_number, 
+        names_to = "column", 
+        values_to = "value",
+        values_transform = list(value = as.character)
+        ) %>% 
+      filter(value |> is.na()) %>% 
+      count(row_number, sort = TRUE)
+  }
+)
+```
+

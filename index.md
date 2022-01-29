@@ -7,3 +7,5 @@
 ## Advent of Code Notebooks
 * [AOC 2021 day 1](/aoc2021day1/)
 
+## TidyTuesday
+* [Palmer Penguins](/penguins/)
