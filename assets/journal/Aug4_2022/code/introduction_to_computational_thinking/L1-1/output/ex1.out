@@ -1,1 +1,1 @@
-UndefVarError: load not defined
+a = 10
