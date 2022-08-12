@@ -1,0 +1,6 @@
+MethodError: no method matching diff(::typeof(Main.FD_SANDBOX_1787823884481894693.f₂))
+Closest candidates are:
+  diff(!Matched::AbstractRange{T}; dims) where T at /opt/hostedtoolcache/julia/1.7.3/x64/share/julia/base/multidimensional.jl:971
+  diff(!Matched::SparseArrays.AbstractSparseMatrixCSC; dims) at /opt/hostedtoolcache/julia/1.7.3/x64/share/julia/stdlib/v1.7/SparseArrays/src/linalg.jl:1110
+  diff(!Matched::AbstractVector) at /opt/hostedtoolcache/julia/1.7.3/x64/share/julia/base/multidimensional.jl:929
+  ...

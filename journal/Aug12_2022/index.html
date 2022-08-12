@@ -1,9 +1,128 @@
-<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/styles/github.min.css"> <link rel=stylesheet  href="/css/franklin.css"> <link rel=stylesheet  href="/css/basic.css"> <link rel=icon  href="/assets/favicon.png"> <title>August 12, 2022</title> <header> <div class=blog-name ><a href="/">Modeling and Simulation</a></div> <nav> <ul> <li><a href="/">Home</a> <li><a href="/goals/">Goals</a> <li><a href="/tag/journal/">Journal</a> </ul> <img src="/assets/hamburger.svg" id=menu-icon > </nav> </header> <div class=franklin-content > <h1 id=august_12_2022 ><a href="#august_12_2022" class=header-anchor >August 12, 2022</a></h1> <div class=franklin-toc ><ol><li><a href="#what_i_learned_today">What I learned today</a><li><a href="#reflection">Reflection</a><li><a href="#notes_on_introduction_to_computational_thinking">Notes on Introduction to Computational Thinking</a><ol><li><a href="#11_images_as_data_and_arrays">1.1 Images as data and arrays</a></ol><li><a href="#references">References</a></ol></div> <h2 id=what_i_learned_today ><a href="#what_i_learned_today" class=header-anchor >What I learned today</a></h2> <ul> <li><p>DevOps: how to configure a Kubernetes cluster and expose its applications through their containers, services, ingresses, and hostnames.</p> </ul> <h2 id=reflection ><a href="#reflection" class=header-anchor >Reflection</a></h2> <p>It&#39;s been a busy week in my personal life and I have not had much free time. I&#39;m already losing sleep to get work done, but I want to force some time to learn something today. The hard part is choosing something to work on&#33; Whatever I choose to do, I want to see it through to the end&#33;</p> <p>I think I will choose to follow computational thinking with Julia from MIT, because of three reasons:</p> <ol> <li><p>I want to learn to model in Julia.</p> <li><p>It&#39;s written in Julia, so I can get better at the language and also communicate it through this website which is written in a <a href="https://franklinjl.org/workflow/index.html#tag_pages">Julia framework</a>.</p> <li><p>It has a structured course load.</p> </ol> <p><strong>I&#39;ve had multiple false starts with this course. Here&#39;s to the first true start</strong></p> <h2 id=notes_on_introduction_to_computational_thinking ><a href="#notes_on_introduction_to_computational_thinking" class=header-anchor >Notes on Introduction to Computational Thinking</a></h2> <blockquote> <p><a href="https://computationalthinking.mit.edu/Spring21/">Link to course</a></p> </blockquote> <h3 id=11_images_as_data_and_arrays ><a href="#11_images_as_data_and_arrays" class=header-anchor >1.1 Images as data and arrays</a></h3> <p>This lecture introduces the student to Julia. It uses images to demonstrate how Julia&#39;s type system can be used to turn matrices into displayable pixels.</p> <p>A goal of this lecture is to implement edge detection in an image.</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> ImageShow, FileIO, ImageIO, Colors, Plots
-url = <span class=hljs-string >&quot;https://user-images.githubusercontent.com/6933510/107239146-dcc3fd00-6a28-11eb-8c7b-41aaf6618935.png&quot;</span>
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/katex/katex.min.css"> <link rel=stylesheet  href="/libs/highlight/styles/github.min.css"> <link rel=stylesheet  href="/css/franklin.css"> <link rel=stylesheet  href="/css/basic.css"> <link rel=icon  href="/assets/favicon.png"> <title>August 12, 2022</title> <header> <div class=blog-name ><a href="/">Modeling and Simulation</a></div> <nav> <ul> <li><a href="/">Home</a> <li><a href="/goals/">Goals</a> <li><a href="/tag/journal/">Journal</a> </ul> <img src="/assets/hamburger.svg" id=menu-icon > </nav> </header> <div class=franklin-content > <h1 id=august_12_2022 ><a href="#august_12_2022" class=header-anchor >August 12, 2022</a></h1> <div class=franklin-toc ><ol><li><a href="#goals_today">Goals today</a><li><a href="#what_i_learned_today">What I learned today</a><li><a href="#reflection">Reflection</a><li><a href="#numerical_and_symbolic_differentiation_in_julia">Numerical and symbolic differentiation in Julia</a><ol><li><a href="#numerical_differentiation">Numerical differentiation</a><li><a href="#symbolic_differentiation">Symbolic differentiation</a></ol><li><a href="#notes_on_introduction_to_computational_thinking">Notes on Introduction to Computational Thinking</a><li><a href="#my_notebook">My notebook</a><li><a href="#references">References</a></ol></div> <h2 id=goals_today ><a href="#goals_today" class=header-anchor >Goals today</a></h2> <ul> <li><p>&#91;&#93; Create a Genie app that displays data in a datatable</p> <li><p>&#91;&#93; Develop pipeline skills</p> <li><p>&#91;&#93; Develop API skills</p> <li><p>&#91;&#93; Complete two computational thinking courses</p> <li><p>&#91;&#93; Complete one week of coursera systems biology courses</p> </ul> <h2 id=what_i_learned_today ><a href="#what_i_learned_today" class=header-anchor >What I learned today</a></h2> <h2 id=reflection ><a href="#reflection" class=header-anchor >Reflection</a></h2> <h2 id=numerical_and_symbolic_differentiation_in_julia ><a href="#numerical_and_symbolic_differentiation_in_julia" class=header-anchor >Numerical and symbolic differentiation in Julia</a></h2> <pre><code class="julia hljs">x = <span class=hljs-number >1</span>:<span class=hljs-number >10</span>
+f(x) = x^<span class=hljs-number >2</span>
+plot(x, f.(x))
+savefig(joinpath(<span class=hljs-meta >@OUTPUT</span>, <span class=hljs-string >&quot;squareplot.svg&quot;</span>))</code></pre> <p><span style="color:red;">// Image matching '/assets/journal/Aug12_2022/code/squareplot' not found. //</span></p> <h3 id=numerical_differentiation ><a href="#numerical_differentiation" class=header-anchor >Numerical differentiation</a></h3> <p>But what if a you have data that changes, and you want to analyze how changing your data affects the result of your function?</p> <p>This is where differentiation comes in. You can take the difference between a function at some input <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span> and a function at the same input plus a small difference divided by the small difference to approximate the function&#39;s derivative at <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span>.</p> <span class=katex-display ><span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML" display=block ><semantics><mrow><mfrac><mrow><mi>d</mi><mi>f</mi><mo stretchy=false >(</mo><mi>x</mi><mo stretchy=false >)</mo></mrow><mrow><mi>d</mi><mi>x</mi></mrow></mfrac><mo>≈</mo><mfrac><mrow><mi>f</mi><mo stretchy=false >(</mo><mi>x</mi><mo stretchy=false >)</mo><mo>+</mo><mi mathvariant=normal >Δ</mi><mi>x</mi></mrow><mrow><mi mathvariant=normal >Δ</mi><mi>x</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">\frac{df(x)}{dx} \approx \frac{f(x) + \Delta x}{\Delta x}</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:2.113em;vertical-align:-0.686em;"></span><span class=mord ><span class="mopen nulldelimiter"></span><span class=mfrac ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:1.427em;"><span style="top:-2.314em;"><span class=pstrut  style="height:3em;"></span><span class=mord ><span class="mord mathnormal">d</span><span class="mord mathnormal">x</span></span></span><span style="top:-3.23em;"><span class=pstrut  style="height:3em;"></span><span class=frac-line  style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class=pstrut  style="height:3em;"></span><span class=mord ><span class="mord mathnormal" style="margin-right:0.10764em;">df</span><span class=mopen >(</span><span class="mord mathnormal">x</span><span class=mclose >)</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class=mspace  style="margin-right:0.2778em;"></span><span class=mrel >≈</span><span class=mspace  style="margin-right:0.2778em;"></span></span><span class=base ><span class=strut  style="height:2.113em;vertical-align:-0.686em;"></span><span class=mord ><span class="mopen nulldelimiter"></span><span class=mfrac ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:1.427em;"><span style="top:-2.314em;"><span class=pstrut  style="height:3em;"></span><span class=mord ><span class=mord >Δ</span><span class="mord mathnormal">x</span></span></span><span style="top:-3.23em;"><span class=pstrut  style="height:3em;"></span><span class=frac-line  style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class=pstrut  style="height:3em;"></span><span class=mord ><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class=mopen >(</span><span class="mord mathnormal">x</span><span class=mclose >)</span><span class=mspace  style="margin-right:0.2222em;"></span><span class=mbin >+</span><span class=mspace  style="margin-right:0.2222em;"></span><span class=mord >Δ</span><span class="mord mathnormal">x</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span> <p>Let&#39;s write a function to approximate differentiation.</p> <pre><code class="julia hljs"><span class=hljs-string >&quot;Returns a function that approximates its derivative&quot;</span>
+<span class=hljs-keyword >function</span> diffapprox(f, deltax)
+	x -&gt; (f(x + deltax) - f(x)) / deltax 
+<span class=hljs-keyword >end</span>
+vec_deltax = <span class=hljs-number >0</span>:<span class=hljs-number >1</span>:<span class=hljs-number >5</span>
+f₂(x) = log(x) * x^<span class=hljs-number >3</span>
+df₂(x) = x^<span class=hljs-number >2</span> + <span class=hljs-number >3</span>x^<span class=hljs-number >2</span> * log(x)
+plot(x, df₂.(x), label = <span class=hljs-string >&quot;Truth&quot;</span>)
+<span class=hljs-keyword >for</span> deltax <span class=hljs-keyword >in</span> vec_deltax
+	y = diffapprox(f₂, deltax).(x)
+	plot!(x, y, alpha = <span class=hljs-number >0.8</span>, linestyle = :dot, label = deltax)
+<span class=hljs-keyword >end</span>
+plot!()
+savefig(joinpath(<span class=hljs-meta >@OUTPUT</span>, <span class=hljs-string >&quot;f2logplot.svg&quot;</span>))</code></pre> <p><span style="color:red;">// Image matching '/assets/journal/Aug12_2022/code/f2logplot' not found. //</span></p> <h3 id=symbolic_differentiation ><a href="#symbolic_differentiation" class=header-anchor >Symbolic differentiation</a></h3> <p>What about for more complicated functions? Let&#39;s try </p> <span class=katex-display ><span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML" display=block ><semantics><mrow><msub><mi>f</mi><mn>2</mn></msub><mo stretchy=false >(</mo><mi>x</mi><mo stretchy=false >)</mo><mo>=</mo><mi>l</mi><mi>o</mi><mi>g</mi><mo stretchy=false >(</mo><mi>x</mi><mo stretchy=false >)</mo><mo>∗</mo><msup><mi>x</mi><mn>3</mn></msup></mrow><annotation encoding="application/x-tex">f_2(x) = log(x) * x^3</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class=mord ><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.1076em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.15em;"><span></span></span></span></span></span></span><span class=mopen >(</span><span class="mord mathnormal">x</span><span class=mclose >)</span><span class=mspace  style="margin-right:0.2778em;"></span><span class=mrel >=</span><span class=mspace  style="margin-right:0.2778em;"></span></span><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class=mopen >(</span><span class="mord mathnormal">x</span><span class=mclose >)</span><span class=mspace  style="margin-right:0.2222em;"></span><span class=mbin >∗</span><span class=mspace  style="margin-right:0.2222em;"></span></span><span class=base ><span class=strut  style="height:0.8641em;"></span><span class=mord ><span class="mord mathnormal">x</span><span class=msupsub ><span class=vlist-t ><span class=vlist-r ><span class=vlist  style="height:0.8641em;"><span style="top:-3.113em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span></span></span></span></span> <p>If we solve this on paper using the product rule we get:</p> <span class=katex-display ><span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML" display=block ><semantics><mrow><mfrac><mrow><mi>d</mi><msub><mi>f</mi><mn>2</mn></msub></mrow><mrow><mi>d</mi><mi>x</mi></mrow></mfrac><mo>=</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>3</mn><msup><mi>x</mi><mn>2</mn></msup><mi>l</mi><mi>o</mi><mi>g</mi><mo stretchy=false >(</mo><mi>x</mi><mo stretchy=false >)</mo></mrow><annotation encoding="application/x-tex">\frac{df_2}{dx} = x^2 + 3x^2log(x)</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:2.0574em;vertical-align:-0.686em;"></span><span class=mord ><span class="mopen nulldelimiter"></span><span class=mfrac ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:1.3714em;"><span style="top:-2.314em;"><span class=pstrut  style="height:3em;"></span><span class=mord ><span class="mord mathnormal">d</span><span class="mord mathnormal">x</span></span></span><span style="top:-3.23em;"><span class=pstrut  style="height:3em;"></span><span class=frac-line  style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class=pstrut  style="height:3em;"></span><span class=mord ><span class="mord mathnormal">d</span><span class=mord ><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.1076em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class=mspace  style="margin-right:0.2778em;"></span><span class=mrel >=</span><span class=mspace  style="margin-right:0.2778em;"></span></span><span class=base ><span class=strut  style="height:0.9474em;vertical-align:-0.0833em;"></span><span class=mord ><span class="mord mathnormal">x</span><span class=msupsub ><span class=vlist-t ><span class=vlist-r ><span class=vlist  style="height:0.8641em;"><span style="top:-3.113em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class=mspace  style="margin-right:0.2222em;"></span><span class=mbin >+</span><span class=mspace  style="margin-right:0.2222em;"></span></span><span class=base ><span class=strut  style="height:1.1141em;vertical-align:-0.25em;"></span><span class=mord >3</span><span class=mord ><span class="mord mathnormal">x</span><span class=msupsub ><span class=vlist-t ><span class=vlist-r ><span class=vlist  style="height:0.8641em;"><span style="top:-3.113em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class=mopen >(</span><span class="mord mathnormal">x</span><span class=mclose >)</span></span></span></span></span> <p>Let&#39;s check with sympy to make sure using the <code>diff</code> function directly on our Julia function.</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> SymPy
+<span class=hljs-meta >@show</span> diff(f₂)</code></pre> <pre><code class="plaintext hljs">ArgumentError: Package SymPy not found in current path:
+- Run `import Pkg; Pkg.add(&quot;SymPy&quot;)` to install the SymPy package.
 
-philip_filename = download(url) <span class=hljs-comment ># download to a local file. The filename is returned</span>
-philip = load(philip_filename)
-philip_html = philip
+</code></pre> <p>This symbolic result from SymPy is exactly what we have above&#33; You can even evaluate this symbolic equation:</p> <pre><code class="julia hljs"><span class=hljs-meta >@show</span> diff(f₂)(<span class=hljs-number >10</span>)</code></pre>
+<pre><code class="plaintext hljs">MethodError: no method matching diff(::typeof(Main.FD_SANDBOX_1787823884481894693.f₂))
+Closest candidates are:
+  diff(!Matched::AbstractRange{T}; dims) where T at /opt/hostedtoolcache/julia/1.7.3/x64/share/julia/base/multidimensional.jl:971
+  diff(!Matched::SparseArrays.AbstractSparseMatrixCSC; dims) at /opt/hostedtoolcache/julia/1.7.3/x64/share/julia/stdlib/v1.7/SparseArrays/src/linalg.jl:1110
+  diff(!Matched::AbstractVector) at /opt/hostedtoolcache/julia/1.7.3/x64/share/julia/base/multidimensional.jl:929
+  ...
+</code></pre>
+<pre><code class="julia hljs"><span class=hljs-meta >@show</span> convert(<span class=hljs-built_in >Float64</span>, diff(f₂)(<span class=hljs-number >10</span>))</code></pre>
+<pre><code class="plaintext hljs">MethodError: no method matching diff(::typeof(Main.FD_SANDBOX_1787823884481894693.f₂))
+Closest candidates are:
+  diff(!Matched::AbstractRange{T}; dims) where T at /opt/hostedtoolcache/julia/1.7.3/x64/share/julia/base/multidimensional.jl:971
+  diff(!Matched::SparseArrays.AbstractSparseMatrixCSC; dims) at /opt/hostedtoolcache/julia/1.7.3/x64/share/julia/stdlib/v1.7/SparseArrays/src/linalg.jl:1110
+  diff(!Matched::AbstractVector) at /opt/hostedtoolcache/julia/1.7.3/x64/share/julia/base/multidimensional.jl:929
+  ...
+</code></pre>
+<h2 id=notes_on_introduction_to_computational_thinking ><a href="#notes_on_introduction_to_computational_thinking" class=header-anchor >Notes on Introduction to Computational Thinking</a></h2>
+<blockquote>
+<p><a href="https://computationalthinking.mit.edu/Spring21/">Link to course</a></p>
+</blockquote>
+<style>
+.content {
+    max-width: 100%;
+    margin-right: 0px;
+    padding: 0px;
+    overflow-y: hidden;
+    height: 100vh;
+}
+.franklin-content {
+    padding: 0px;
+}
+.page-foot {
+    display: none;
+}
+.plutopage {
+    height: 100vh;
+}
+.smallscreenlink {
+    display: none;
+}
+@media (max-width: 768px) {
+    .franklin-content {
+        padding: 0px;
+    }
+}
+</style>
+<iframe width="100%" height="100%"
+src="../../notebooks/compthink/transformations_autodiff/index.html"
+class=plutopage 
+frameborder=0 
+allow="accelerometer; ambient-light-sensor; autoplay; battery; camera; display-capture; document-domain; encrypted-media; execution-while-not-rendered; execution-while-out-of-viewport; fullscreen; geolocation; gyroscope; layout-animations; legacy-image-formats; magnetometer; microphone; midi; navigation-override; oversized-images; payment; picture-in-picture; publickey-credentials-get; sync-xhr; usb; wake-lock; screen-wake-lock; vr; web-share; xr-spatial-tracking"
+allowfullscreen></iframe>
+<a class=smallscreenlink  href="../../notebooks/compthink/transformations_autodiff/index.html"></a>
 
-plot(philip_html)
-savefig(joinpath(<span class=hljs-meta >@OUTPUT</span>, <span class=hljs-string >&quot;philip.svg&quot;</span>))</code></pre> <p><span style="color:red;">// Image matching '/assets/journal/Aug12_2022/code/philip' not found. //</span></p> <p>Wow, it&#39;s awesome you can display images as plots&#33; The lecture teaches that images are RGB arrays, where RGB comes from some package...</p> <h2 id=references ><a href="#references" class=header-anchor >References</a></h2> <ul> <li><p><a id=edelman  class=anchor ></a><strong>Edelman</strong>, <strong>3Blue1Brown</strong>, 2020-2021. <a href="https://computationalthinking.mit.edu/Spring21/">Introduction to computational thinking</a></p> </ul> <div class=page-foot > <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> Bruno dos Santos. Last modified: August 12, 2022. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. </div> </div> <script src="/libs/highlight/highlight.min.js"></script> <script>hljs.highlightAll();hljs.configure({tabReplace: ' '});</script>
+<h2 id=my_notebook ><a href="#my_notebook" class=header-anchor >My notebook</a></h2>
+<style>
+.content {
+    max-width: 100%;
+    margin-right: 0px;
+    padding: 0px;
+    overflow-y: hidden;
+    height: 100vh;
+}
+.franklin-content {
+    padding: 0px;
+}
+.page-foot {
+    display: none;
+}
+.plutopage {
+    height: 100vh;
+}
+.smallscreenlink {
+    display: none;
+}
+@media (max-width: 768px) {
+    .franklin-content {
+        padding: 0px;
+    }
+}
+</style>
+<iframe width="100%" height="100%"
+src="../../notebooks/compthink/module1/index.html"
+class=plutopage 
+frameborder=0 
+allow="accelerometer; ambient-light-sensor; autoplay; battery; camera; display-capture; document-domain; encrypted-media; execution-while-not-rendered; execution-while-out-of-viewport; fullscreen; geolocation; gyroscope; layout-animations; legacy-image-formats; magnetometer; microphone; midi; navigation-override; oversized-images; payment; picture-in-picture; publickey-credentials-get; sync-xhr; usb; wake-lock; screen-wake-lock; vr; web-share; xr-spatial-tracking"
+allowfullscreen></iframe>
+<a class=smallscreenlink  href="../../notebooks/compthink/module1/index.html"></a>
+
+<h2 id=references ><a href="#references" class=header-anchor >References</a></h2>
+<ul>
+<li><p><a id=edelman  class=anchor ></a><strong>Edelman</strong>, <strong>3Blue1Brown</strong>, 2020-2021. <a href="https://computationalthinking.mit.edu/Spring21/">Introduction to computational thinking</a></p>
+
+</ul>
+<div class=page-foot >
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> Bruno dos Santos. Last modified: August 12, 2022.
+    Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
+</div>
+</div>
+    
+        
+
+
+
+    
+    
+        <script src="/libs/highlight/highlight.min.js"></script>
+<script>hljs.highlightAll();hljs.configure({tabReplace: '    '});</script>
