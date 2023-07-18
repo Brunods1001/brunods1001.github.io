@@ -1,3 +1,2 @@
-ArgumentError: Package SymPy not found in current path:
+ArgumentError: Package SymPy not found in current path.
 - Run `import Pkg; Pkg.add("SymPy")` to install the SymPy package.
-
